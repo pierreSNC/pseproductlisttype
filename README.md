@@ -33,7 +33,7 @@ Each type is displayed with a **colored badge**, making catalog management clear
 ## Installation
 
 ```bash
-git clone https://github.com/your-username/pseproductlisttype.git
+git clone https://github.com/pierreSNC/pseproductlisttype.git
 ```
 ```bash
 composer install
