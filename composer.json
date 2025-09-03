@@ -1,0 +1,22 @@
+{
+    "name": "prestashop/pseproductlisttype",
+    "description": "PrestaShop module displaying product type (simple or combination) in the BO product list",
+    "type": "prestashop-module",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name": "Pierre SENECHAL",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Prestashop\\Module\\Pseproductlisttype\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.2"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

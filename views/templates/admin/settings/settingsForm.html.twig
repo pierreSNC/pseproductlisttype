@@ -1,0 +1,30 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% form_theme settingsForm '@PrestaShop/Admin/TwigTemplateForm/prestashop_ui_kit.html.twig' %}
+{% set layoutTitle = 'Product Type in Product List (standard, pack, combinations, virtual)'|trans({}, 'Modules.Itrproductlistinsert.Admin') %}
+
+{% block content %}
+    {{ form_start(settingsForm) }}
+    <div class="card pseproductlisttype__wrapper">
+        <h3 class="card-header">
+            <i class="material-icons">settings</i> {{ 'Settings'|trans({}, 'Modules.Pseproductlisttype.Admin') }}
+        </h3>
+        <div class="card-body">
+            <div class="form-wrapper">
+                <div class="col-lg-6">
+                    {{ form_widget(settingsForm) }}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary float-right" id="save-button">
+                    {{ 'Save'|trans({}, 'Admin.Actions') }}
+                </button>
+            </div>
+        </div>
+    </div>
+    {{ form_end(settingsForm) }}
+
+
+{% endblock %}

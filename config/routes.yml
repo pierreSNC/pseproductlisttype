@@ -1,0 +1,5 @@
+pseproductlisttype_settings:
+  path: /pseproductlisttype/settings
+  methods: [GET, POST]
+  defaults:
+    _controller: 'Prestashop\Module\Pseproductlisttype\Controller\Settings\SettingsController::index'
