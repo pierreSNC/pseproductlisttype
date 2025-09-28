@@ -3,7 +3,7 @@
 use PrestaShop\PrestaShop\Core\Grid\Definition\GridDefinitionInterface;
 use PrestaShop\PrestaShop\Core\Grid\Column\Type\Common\HtmlColumn;
 use PrestaShop\PrestaShop\Core\Grid\Filter\Filter;
-use PrestaShopBundle\Form\Admin\Type\CountryChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
     require dirname(__FILE__) . '/vendor/autoload.php';
@@ -102,7 +102,7 @@ class pseproductlisttype extends Module
         );
 
         $definition->getFilters()->add(
-            (new Filter('type_product', CountryChoiceType::class))
+            (new Filter('type_product', ChoiceType::class))
                 ->setTypeOptions([
                     'choices' => $choices,
                     'placeholder' => $this->trans('All', [], 'Admin.Global'),
