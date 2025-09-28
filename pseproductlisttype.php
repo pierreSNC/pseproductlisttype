@@ -28,7 +28,7 @@ class pseproductlisttype extends Module
             'Modules.Pseproductlisttype.Admin'
         );
 
-        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => '8.2.1'];
+        $this->ps_versions_compliancy = ['min' => '8.0.0', 'max' => '9.99.99'];
 
         parent::__construct();
     }
