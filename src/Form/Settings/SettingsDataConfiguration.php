@@ -15,6 +15,7 @@ final class SettingsDataConfiguration implements DataConfigurationInterface
     public const BG_COLOR_COMBINATION_PRODUCT = 'BG_COLOR_COMBINATION_PRODUCT';
     public const BG_COLOR_PACK_PRODUCT = 'BG_COLOR_PACK_PRODUCT';
     public const BG_COLOR_VIRTUAL_PRODUCT = 'BG_COLOR_VIRTUAL_PRODUCT';
+    public const ACTIVE_VIRTUAL_PRODUCT = 'ACTIVE_VIRTUAL_PRODUCT';
 
     /**
      * @var ConfigurationInterface
@@ -34,6 +35,7 @@ final class SettingsDataConfiguration implements DataConfigurationInterface
         $return['bg_color_combination_product'] = $this->configuration->get(static::BG_COLOR_COMBINATION_PRODUCT);
         $return['bg_color_pack_product'] = $this->configuration->get(static::BG_COLOR_PACK_PRODUCT);
         $return['bg_color_virtual_product'] = $this->configuration->get(static::BG_COLOR_VIRTUAL_PRODUCT);
+        $return['active_virtual_product'] = $this->configuration->get(static::ACTIVE_VIRTUAL_PRODUCT);
 
         return $return;
     }
@@ -44,6 +46,7 @@ final class SettingsDataConfiguration implements DataConfigurationInterface
         $this->configuration->set(static::BG_COLOR_COMBINATION_PRODUCT, $configuration['bg_color_combination_product']);
         $this->configuration->set(static::BG_COLOR_PACK_PRODUCT, $configuration['bg_color_pack_product']);
         $this->configuration->set(static::BG_COLOR_VIRTUAL_PRODUCT, $configuration['bg_color_virtual_product']);
+        $this->configuration->set(static::ACTIVE_VIRTUAL_PRODUCT, $configuration['active_virtual_product']);
 
         return [];
     }

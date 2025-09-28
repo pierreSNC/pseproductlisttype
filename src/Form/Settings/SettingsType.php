@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Prestashop\Module\Pseproductlisttype\Form\Settings;
 
 use PrestaShopBundle\Form\Admin\Type\ColorPickerType;
+use PrestaShopBundle\Form\Admin\Type\SwitchType;
 use PrestaShopBundle\Form\Admin\Type\TranslatorAwareType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -27,6 +28,10 @@ class SettingsType extends TranslatorAwareType
             ])
             ->add('bg_color_virtual_product', ColorPickerType::class, [
                 'label' => $this->trans('Pack product', 'Modules.Pseproductlisttype.Admin'),
+                'required' => false,
+            ])
+            ->add('active_virtual_product', SwitchType::class, [
+                'label' => $this->trans('Active pack product', 'Modules.Pseproductlisttype.Admin'),
                 'required' => false,
             ])
         ;

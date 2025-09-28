@@ -80,6 +80,17 @@ class pseproductlisttype extends Module
     {
         /** @var GridDefinitionInterface $definition */
         $definition = $params['definition'];
+        $activePackProduct = Configuration::get('ACTIVE_VIRTUAL_PRODUCT');
+
+        $choices = [
+            $this->trans('Simple', [], 'Modules.Pseproductlisttype.Admin') => 'simple',
+            $this->trans('Combination', [], 'Modules.Pseproductlisttype.Admin') => 'combination',
+            $this->trans('Pack', [], 'Modules.Pseproductlisttype.Admin') => 'pack',
+        ];
+
+        if ($activePackProduct) {
+            $choices[$this->trans('Virtual', [], 'Modules.Pseproductlisttype.Admin')] = 'virtual';
+        }
 
         $definition->getColumns()->addAfter(
             'name',
@@ -93,12 +104,7 @@ class pseproductlisttype extends Module
         $definition->getFilters()->add(
             (new Filter('type_product', CountryChoiceType::class))
                 ->setTypeOptions([
-                    'choices' => [
-                        $this->trans('Simple', [], 'Modules.Pseproductlisttype.Admin') => 'simple',
-                        $this->trans('Combination', [], 'Modules.Pseproductlisttype.Admin') => 'combination',
-                        $this->trans('Pack', [], 'Modules.Pseproductlisttype.Admin') => 'pack',
-                        $this->trans('Virtual', [], 'Modules.Pseproductlisttype.Admin') => 'virtual',
-                    ],
+                    'choices' => $choices,
                     'placeholder' => $this->trans('All', [], 'Admin.Global'),
                     'required' => false,
                 ])
@@ -112,22 +118,24 @@ class pseproductlisttype extends Module
         /** @var \Doctrine\DBAL\Query\QueryBuilder $searchQueryBuilder */
         $searchQueryBuilder = $params['search_query_builder'];
         $searchCriteria = $params['search_criteria'];
+        $activeVirtualProduct = (bool) Configuration::get('ACTIVE_VIRTUAL_PRODUCT');
 
-        $searchQueryBuilder->addSelect(
-            'CASE
-            WHEN p.is_virtual = 1 THEN "virtual"
+        $caseType = '
+        CASE
+            ' . ($activeVirtualProduct ? 'WHEN p.is_virtual = 1 THEN "virtual"' : '') . '
             WHEN pk.id_product_pack IS NOT NULL THEN "pack"
             WHEN pa.id_product_attribute IS NOT NULL THEN "combination"
             ELSE "simple"
-        END AS type_product'
-        );
+        END AS type_product
+    ';
+        $searchQueryBuilder->addSelect($caseType);
 
-        $searchQueryBuilder->addSelect(
-            'CASE
-            WHEN p.is_virtual = 1 THEN "' . $this->quoteBadge(
-                $this->trans('Virtual', [], 'Modules.Pseproductlisttype.Admin'),
-                Configuration::get('BG_COLOR_VIRTUAL_PRODUCT')
-            ) . '"
+        $caseBadge = '
+        CASE
+            ' . ($activeVirtualProduct ? 'WHEN p.is_virtual = 1 THEN "' . $this->quoteBadge(
+                    $this->trans('Virtual', [], 'Modules.Pseproductlisttype.Admin'),
+                    Configuration::get('BG_COLOR_VIRTUAL_PRODUCT')
+                ) . '"' : '') . '
             WHEN pk.id_product_pack IS NOT NULL THEN "' . $this->quoteBadge(
                 $this->trans('Pack', [], 'Modules.Pseproductlisttype.Admin'),
                 Configuration::get('BG_COLOR_PACK_PRODUCT')
@@ -140,8 +148,9 @@ class pseproductlisttype extends Module
                 $this->trans('Simple', [], 'Modules.Pseproductlisttype.Admin'),
                 Configuration::get('BG_COLOR_SIMPLE_PRODUCT')
             ) . '"
-        END AS type_product_badge'
-        );
+        END AS type_product_badge
+    ';
+        $searchQueryBuilder->addSelect($caseBadge);
 
         $searchQueryBuilder->leftJoin(
             'p',
@@ -165,6 +174,7 @@ class pseproductlisttype extends Module
             $searchQueryBuilder->setParameter('type_product', $filters['type_product']);
         }
     }
+
 
     private function quoteBadge(string $label, $hexColor): string
     {
